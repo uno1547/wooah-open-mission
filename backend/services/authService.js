@@ -3,11 +3,12 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 exports.registerUser = async ({ id, password}) => {
-  const userQuery = await db.collection('users').where('id', '==', id).get()
-  if (!userQuery.empty) throw new Error('이미 존재하는 아이디입니다.')
+  // const userQuery = await db.collection('users').where('id', '==', id).get()
+  const userDoc = await db.collection('users').doc(id).get()
+  if (userDoc.exists) throw new Error('이미 존재하는 아이디입니다.')
   
   const hashedPassword = await bcrypt.hash(password, 10)
-  await db.collection('users').add({ 
+  await db.collection('users').doc(id).set({ 
     id, 
     password: hashedPassword,
     createdAt: new Date()
@@ -17,10 +18,10 @@ exports.registerUser = async ({ id, password}) => {
 }
 
 exports.loginUser = async ({ id, password }) => {
-  const userQuery = await db.collection('users').where('id', '==', id).get()
-  if (userQuery.empty) throw new Error('존재하지 않는 아이디입니다.')
+  const userDoc = await db.collection('users').doc(id).get()
+  if (!userDoc.exists) throw new Error('존재하지 않는 아이디입니다.')
     
-  const userData = userQuery.docs[0].data()
+  const userData = userDoc.data()
 
   const isMatch = await bcrypt.compare(password, userData.password)
   if (!isMatch) throw new Error('비밀번호가 일치하지 않습니다.')

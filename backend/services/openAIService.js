@@ -35,7 +35,7 @@ exports.recommendPlaylists = async ({query}) => {
   const response = await openai.responses.create({
     model: "gpt-4.1",
     // input: `아이유 노래 3곡 추천해줘, 응답은 무조건 json 배열 형태로 해줘 name, singer, genre, youtubeTumbnail 4개 필드반환되게 ${query}`,
-    input: `아이유 노래 blueming찾아줘, 응답은 무조건 json 배열 형태로 해줘 name, singer, genre, youtubeTumbnail 4개 필드반환되게 ${query}`,
+    input: `${query}, 응답은 무조건 json 배열 형태로 해줘 name, singer, genre, youtubeTumbnail 4개 필드반환되게`,
     text: {
         format: {
             type: "json_schema",
