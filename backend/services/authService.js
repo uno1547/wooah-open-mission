@@ -30,5 +30,5 @@ exports.loginUser = async ({ id, password }) => {
     process.env.JWT_SECRET || 'secretKey', 
   )
 
-    return token
+  return token
 }
