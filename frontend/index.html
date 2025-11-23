@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>나만의 AI 플레이리스트</h1>
-    <header>
+    <header style="display: none;">
     <div>
       <span id="nav-login">로그인</span>
       <span id="nav-register">회원가입</span>
@@ -38,6 +38,7 @@
       <form action="" id="search-section">
         <h2>노래 검색</h2>
         <input type="text" id="search-input" placeholder="검색어 입력 후 Enter">
+        <p id="message" style="text-align: center; color: #999; padding: 40px 20px; line-height: 30px;">검색창에 ‘공부할 때 듣기 좋은 노래’ 처럼 입력해보세요!<br>AI가 분위기에 맞는 곡을 추천하고 저장할 수 있어요.</p>
         <div id="search-results"></div>
       </form>
     </section>

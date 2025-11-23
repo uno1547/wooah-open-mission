@@ -20,17 +20,26 @@ h1 {
 }
 
 header {
-  background-color: #222;
-  color: #fff;
-  padding: 10px;
+  background: linear-gradient(135deg, #b4a7f5 0%, #d4a5f7 100%);
+  color: white;
+  padding: 20px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 2px 10px rgba(180, 167, 245, 0.3);
 }
 
 header span {
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 15px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: background 0.3s ease;
+  font-weight: 500;
+}
+
+header span:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 
 main {

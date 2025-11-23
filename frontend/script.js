@@ -5,17 +5,19 @@ function showPage(pageId) {
   // header 메뉴 표시
   const token = localStorage.getItem('accessToken');
   if(token){
+    document.querySelector('header').style.display = 'flex'; 
     document.getElementById('nav-login').style.display = 'none';
     document.getElementById('nav-register').style.display = 'none';
     document.getElementById('nav-search').style.display = 'inline';
     document.getElementById('nav-playlist').style.display = 'inline';
     document.getElementById('nav-logout').style.display = 'inline';
   } else {
-    document.getElementById('nav-login').style.display = 'inline';
-    document.getElementById('nav-register').style.display = 'inline';
-    document.getElementById('nav-search').style.display = 'none';
-    document.getElementById('nav-playlist').style.display = 'none';
-    document.getElementById('nav-logout').style.display = 'none';
+    document.querySelector('header').style.display = 'none'; 
+    // document.getElementById('nav-login').style.display = 'none';
+    // document.getElementById('nav-register').style.display = 'none';
+    // document.getElementById('nav-search').style.display = 'none';
+    // document.getElementById('nav-playlist').style.display = 'none';
+    // document.getElementById('nav-logout').style.display = 'none';
   }
 
   if(pageId === 'playlist') {
@@ -34,6 +36,8 @@ document.getElementById('nav-register').addEventListener('click', () => showPage
 document.getElementById('nav-search').addEventListener('click', () => showPage('search'));
 document.getElementById('nav-playlist').addEventListener('click', () => showPage('playlist'));
 document.getElementById('nav-logout').addEventListener('click', () => {
+  document.getElementById('search-results').innerHTML = '';
+  document.getElementById('playlist-results').innerHTML = '';
   localStorage.removeItem('accessToken');
   showPage('auth');
 });
@@ -60,6 +64,8 @@ document.getElementById('login-section').addEventListener('submit', async (e) =>
   
     localStorage.setItem('accessToken', data.token);
     alert('로그인 성공');
+    document.getElementById('login-id').value = '';
+    document.getElementById('login-password').value = '';
     showPage('search');
 
   } catch (error) {
@@ -106,6 +112,7 @@ document.getElementById('search-section').addEventListener('submit', async (e) =
   e.preventDefault();
   const query = document.getElementById('search-input').value;
   if(!query) return;
+
   try {
     const response = await fetch(`http://localhost:3000/api/openAI/recommend`, {
       method: 'POST',
@@ -118,6 +125,7 @@ document.getElementById('search-section').addEventListener('submit', async (e) =
       return
     }
 
+    document.getElementById('message').style.display = 'none';
     const resultsDiv = document.getElementById('search-results');
     resultsDiv.innerHTML = '';
     
@@ -218,7 +226,7 @@ async function loadUserPlaylist() {
     playlistDiv.innerHTML = ''; // 기존 목록 초기화
 
     if (data.length === 0) {
-      playlistDiv.innerHTML = '<p>저장된 노래가 없습니다.</p>';
+      playlistDiv.innerHTML = '<p style="text-align: center; color: #999; padding: 40px 20px; line-height: 30px;">아직 저장된 노래가 없어요.<br>검색해서 추가해 보세요!</p>';
       return;
     }
 
