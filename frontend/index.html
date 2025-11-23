@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>나만의 AI 플레이리스트</title>
+</head>
+<body>
+  <h1>나만의 AI 플레이리스트</h1>
+    <header style="display: none;">
+    <div>
+      <span id="nav-login">로그인</span>
+      <span id="nav-register">회원가입</span>
+      <span id="nav-search" style="display:none;">검색</span>
+      <span id="nav-playlist" style="display:none;">내 플리보기</span>
+    </div>
+    <span id="nav-logout" style="display:none;">로그아웃</span>
+  </header>
+  <main>
+    <section id="auth-page">
+      <form id="login-section">
+        <h2>로그인</h2>
+        <input type="text" id="login-id" placeholder="아이디" required>
+        <input type="password" id="login-password" placeholder="비밀번호" required>
+        <button id="login-btn">로그인</button>
+      </form>
+      <form id="register-section" style="margin-top:20px;">
+        <h2>회원가입</h2>
+        <input type="text" id="register-id" placeholder="아이디" required>
+        <input type="password" id="register-password" placeholder="비밀번호" required>
+        <button id="register-btn">회원가입</button>
+      </form>
+    </section>
+
+    <!-- 검색 화면 -->
+    <section id="search-page">
+      <form action="" id="search-section">
+        <h2>노래 검색</h2>
+        <input type="text" id="search-input" placeholder="검색어 입력 후 Enter">
+        <p id="message" style="text-align: center; color: #999; padding: 40px 20px; line-height: 30px;">검색창에 ‘공부할 때 듣기 좋은 노래’ 처럼 입력해보세요!<br>AI가 분위기에 맞는 곡을 추천하고 저장할 수 있어요.</p>
+        <div id="search-results"></div>
+      </form>
+    </section>
+    <!-- 내 플레이리스트 화면 -->
+    <section id="playlist-page">
+      <h2>내 플레이리스트</h2>
+      <div id="playlist-results"></div>
+    </section>
+  </main>
+    <script src="script.js"></script>
+</body>
+
+</html>
