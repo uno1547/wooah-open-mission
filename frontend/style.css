@@ -66,6 +66,16 @@ section {
   flex: 1;
 }
 
+.song-info a {
+  color: inherit;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.song-info a:hover {
+  opacity: 0.7;
+}
+
 h2 {
   color: #b4a7f5;
   margin-top: 0;

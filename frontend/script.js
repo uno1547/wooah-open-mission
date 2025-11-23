@@ -121,18 +121,31 @@ document.getElementById('search-section').addEventListener('submit', async (e) =
       console.log(song.name, song.singer);
     })
 
-    const listHtml = data.map(song => `
-      <div class="song-item">
+    // const listHtml = data.map(song => `
+    //   <div class="song-item">
+    //     <img src="${song.youtubeTumbnail}" alt="썸네일">
+    //     <div class="song-info">
+    //       <strong>${song.name}</strong> / ${song.singer} / ${song.genre}<br>
+    //       <a href="${song.youtubeLink}" target="_blank">YouTube</a>
+    //     </div>
+    //     <button class="save-btn">저장하기</button>
+    //   </div>  
+    // `)
+    // resultsDiv.innerHTML = listHtml.join('');
+    data.forEach(song => {
+      const div = document.createElement('div');
+      div.className = 'song-item';
+      div.dataset.song = JSON.stringify(song); // ⭐ 여기 추가 (song 정보 저장)
+      div.innerHTML = `
         <img src="${song.youtubeTumbnail}" alt="썸네일">
         <div class="song-info">
-          <strong>${song.name}</strong> / ${song.singer} / ${song.genre}<br>
-          <a href="${song.youtubeLink}" target="_blank">YouTube</a>
+          <strong><a href="${song.youtubeLink}" target="_blank">${song.name}</a></strong> / ${song.singer} / ${song.genre}
         </div>
-        <button class="save-btn">저장하기</button>
-      </div>  
-    `)
-
-    resultsDiv.innerHTML = listHtml.join('');
+        <button type="button" class="save-btn">저장하기</button>
+      `;
+    resultsDiv.appendChild(div);
+  });
+    
 
 
 
@@ -141,32 +154,33 @@ document.getElementById('search-section').addEventListener('submit', async (e) =
     alert('서버와 연결할 수 없습니다. 잠시 후 다시 시도해주세요.');
     return;
   }
-  // const data = await res.json();
-  //   const resultsDiv = document.getElementById('search-results');
-  //   resultsDiv.innerHTML = '';
-  //   data.forEach(song => {
-  //     const div = document.createElement('div');
-  //     div.className = 'song-item';
-  //     div.innerHTML = `
-  //       <img src="${song.thumbnail}" alt="썸네일">
-  //       <div class="song-info">
-  //         <strong>${song.title}</strong> / ${song.artist} / ${song.genre}<br>
-  //         <a href="${song.youtubeLink}" target="_blank">YouTube</a>
-  //       </div>
-  //       <button class="save-btn">저장하기</button>
-  //     `;
-  //     // 저장 버튼 클릭 이벤트
-  //     div.querySelector('.save-btn').addEventListener('click', async () => {
-  //       const token = localStorage.getItem('token');
-  //       if(!token){ alert('로그인 필요'); return; }
-  //       await fetch('/api/user/addlist', {
-  //         method: 'POST',
-  //         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-  //         body: JSON.stringify(song)
-  //       });
-  //       alert('저장 완료!');
-  //     });
-  //     resultsDiv.appendChild(div);
-  //   });
-  // }
+});
+
+document.getElementById('search-results').addEventListener('click', async (e) => {
+  if(e.target.classList.contains('save-btn')){
+    const song = JSON.parse(e.target.closest('.song-item').dataset.song);
+    console.log(song);
+    const token = localStorage.getItem('accessToken');
+    if(!token){ alert('로그인 필요'); return; }
+
+    try {
+      const res = await fetch('http://localhost:3000/api/user/list', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(song)
+      });
+      const resData = await res.json();
+      if(!res.ok) {
+        alert(resData.error || '저장 실패');
+        return;
+      }
+      alert('플레이리스트에 저장 완료!');
+    } catch(err) {
+      console.error('저장 에러:', err);
+      alert('서버 연결 실패');
+    }
+  }
 });
