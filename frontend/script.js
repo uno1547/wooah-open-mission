@@ -17,6 +17,10 @@ function showPage(pageId) {
     document.getElementById('nav-playlist').style.display = 'none';
     document.getElementById('nav-logout').style.display = 'none';
   }
+
+  if(pageId === 'playlist') {
+    loadUserPlaylist();
+  }
 }
 
 // 초기 로딩 시 JWT 확인
@@ -184,3 +188,54 @@ document.getElementById('search-results').addEventListener('click', async (e) =>
     }
   }
 });
+
+
+// 플레이리스트 페이지 진입 시 저장된 목록 불러오기
+async function loadUserPlaylist() {
+  const token = localStorage.getItem('accessToken');
+  if (!token) {
+    alert('로그인이 필요합니다.');
+    showPage('auth');
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:3000/api/user/list', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.error || '플레이리스트 불러오기 실패');
+      return;
+    }
+
+    const playlistDiv = document.getElementById('playlist-results');
+    playlistDiv.innerHTML = ''; // 기존 목록 초기화
+
+    if (data.length === 0) {
+      playlistDiv.innerHTML = '<p>저장된 노래가 없습니다.</p>';
+      return;
+    }
+
+    data.forEach(song => {
+      const div = document.createElement('div');
+      div.className = 'song-item';
+      div.innerHTML = `
+        <img src="${song.youtubeTumbnail}" alt="썸네일">
+        <div class="song-info">
+          <strong><a href="${song.youtubeLink}" target="_blank">${song.name}</a></strong> / ${song.singer} / ${song.genre}
+        </div>
+      `;
+      playlistDiv.appendChild(div);
+    });
+
+  } catch (error) {
+    console.error('플레이리스트 불러오기 에러:', error);
+    alert('서버 연결 실패');
+  }
+}
