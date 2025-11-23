@@ -21,7 +21,7 @@ app.use('/api/user', userRouter);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // SPA를 위한 catch-all 라우트 (맨 마지막에)
-app.get('*', (req, res) => {
+app.use((req, res, next) => {
   // API 요청은 제외
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ error: 'API endpoint not found' });
