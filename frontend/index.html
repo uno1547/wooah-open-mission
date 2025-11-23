@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="style.css">
   <title>나만의 AI 플레이리스트</title>
 </head>
@@ -12,10 +13,10 @@
     <div>
       <span id="nav-login">로그인</span>
       <span id="nav-register">회원가입</span>
-      <span id="nav-search" style="display:none;">검색</span>
-      <span id="nav-playlist" style="display:none;">내 플리보기</span>
+      <span id="nav-search" style="display:none;"><i class="material-icons">search</i><span class="nav-text">검색</span></span>
+      <span id="nav-playlist" style="display:none;"><i class="material-icons">queue_music</i><span class="nav-text">내 플리보기</span></span>
     </div>
-    <span id="nav-logout" style="display:none;">로그아웃</span>
+    <span id="nav-logout" style="display:none;"><i class="material-icons">logout</i><span class="nav-text">로그아웃</span></span>
   </header>
   <main>
     <section id="auth-page">
@@ -37,8 +38,11 @@
     <section id="search-page">
       <form action="" id="search-section">
         <h2>노래 검색</h2>
-        <input type="text" id="search-input" placeholder="검색어 입력 후 Enter">
-        <p id="message" style="text-align: center; color: #999; padding: 40px 20px; line-height: 30px;">검색창에 ‘공부할 때 듣기 좋은 노래’ 처럼 입력해보세요!<br>AI가 분위기에 맞는 곡을 추천하고 저장할 수 있어요.</p>
+        <div id="search-div">
+          <input type="text" id="search-input" placeholder="검색어 입력 후 Enter">
+          <button type="submit" id="search-btn">검색</button>
+        </div>
+        <p id="message" style="text-align: center; color: #999; padding: 40px 20px; line-height: 30px;">검색창에 '공부할 때 듣기 좋은 노래' 처럼 입력해보세요!<br>AI가 분위기에 맞는 곡을 추천하고 저장할 수 있어요.</p>
         <div id="search-results"></div>
       </form>
     </section>
