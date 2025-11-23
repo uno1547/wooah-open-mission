@@ -8,7 +8,7 @@ exports.addUserList = async (req, res) => {
     const playlist = req.body;
 
     const result = await userService.addUserPlaylist({ id, playlist });
-    res.status(201).json();
+    res.status(201).json(result);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -17,6 +17,9 @@ exports.addUserList = async (req, res) => {
 exports.getUserList = async (req, res) => {
   try {
     const { id } = req.user;
+
+    const result = await userService.getUserPlaylists({ id });
+    res.status(200).json(result);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

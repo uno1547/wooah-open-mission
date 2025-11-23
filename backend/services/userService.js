@@ -11,3 +11,17 @@ exports.addUserPlaylist = async ({ id, playlist }) => {
     .collection('playlists')
     .add(dataToSave);
 }
+
+exports.getUserPlaylists = async ({ id }) => {
+  const snapshot = await db
+    .collection('users')
+    .doc(id)
+    .collection('playlists')
+    .orderBy('createdAt', 'desc')
+    .get();
+
+  return snapshot.docs.map(doc => ({
+    id : doc.id,
+    ...doc.data()
+  }))
+}
