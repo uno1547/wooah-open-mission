@@ -8,9 +8,9 @@ function showPage(pageId) {
     document.querySelector('header').style.display = 'flex'; 
     document.getElementById('nav-login').style.display = 'none';
     document.getElementById('nav-register').style.display = 'none';
-    document.getElementById('nav-search').style.display = 'inline';
-    document.getElementById('nav-playlist').style.display = 'inline';
-    document.getElementById('nav-logout').style.display = 'inline';
+    document.getElementById('nav-search').style.display = 'inline-flex';
+    document.getElementById('nav-playlist').style.display = 'inline-flex';
+    document.getElementById('nav-logout').style.display = 'inline-flex';
   } else {
     document.querySelector('header').style.display = 'none'; 
     // document.getElementById('nav-login').style.display = 'none';
