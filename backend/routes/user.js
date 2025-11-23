@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authMiddleware = require('../middlewares/authMiddleware');
+const authMiddleware = require('../middlewares/authMiddleWare');
 const userController = require('../controllers/userController');
 
 router.post('/list', authMiddleware, userController.addUserList);
