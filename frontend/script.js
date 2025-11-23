@@ -65,6 +65,37 @@ document.getElementById('login-section').addEventListener('submit', async (e) =>
   }
 })
 
+// 회원가입 API 호출
+document.getElementById('register-section').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const id = document.getElementById('register-id').value;
+  const password = document.getElementById('register-password').value;
+  console.log(id, password);
+  try {
+    const response = await fetch('http://localhost:3000/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, password })
+    });
+    
+    const data = await response.json();
+    
+    if(!response.ok){
+      alert(data.error || '회원가입 실패');
+      return;
+    }
+  
+    alert('회원가입 성공! 로그인 해주세요.');
+    document.getElementById('register-id').value = '';
+    document.getElementById('register-password').value = '';
+    showPage('auth');
+
+  } catch (error) {
+    console.error('회원가입 에러:', error);
+    alert('서버와 연결할 수 없습니다. 잠시 후 다시 시도해주세요.');
+    return;
+  }
+})
 // 검색 입력 이벤트
 document.getElementById('search-input').addEventListener('keypress', async (e) => {
   if(e.key === 'Enter'){
