@@ -49,7 +49,7 @@ document.getElementById('login-section').addEventListener('submit', async (e) =>
   const password = document.getElementById('login-password').value;
   console.log(id, password);
   try {
-    const response = await fetch('http://localhost:3000/api/auth/login', {
+    const response = await fetch(`${CONFIG.BASE_URL}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, password })
@@ -82,7 +82,7 @@ document.getElementById('register-section').addEventListener('submit', async (e)
   const password = document.getElementById('register-password').value;
   console.log(id, password);
   try {
-    const response = await fetch('http://localhost:3000/api/auth/register', {
+    const response = await fetch(`${CONFIG.BASE_URL}/api/auth/register`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, password })
@@ -114,7 +114,7 @@ document.getElementById('search-section').addEventListener('submit', async (e) =
   if(!query) return;
 
   try {
-    const response = await fetch(`http://localhost:3000/api/openAI/recommend`, {
+    const response = await fetch(`${CONFIG.BASE_URL}/api/openAI/recommend`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query })
@@ -176,7 +176,7 @@ document.getElementById('search-results').addEventListener('click', async (e) =>
     if(!token){ alert('로그인 필요'); return; }
 
     try {
-      const res = await fetch('http://localhost:3000/api/user/list', {
+      const res = await fetch(`${CONFIG.BASE_URL}/api/user/list`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -208,7 +208,7 @@ async function loadUserPlaylist() {
   }
 
   try {
-    const res = await fetch('http://localhost:3000/api/user/list', {
+    const res = await fetch(`${CONFIG.BASE_URL}/api/user/list`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
